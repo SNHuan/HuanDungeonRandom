@@ -1,0 +1,346 @@
+# HuanDungeonRandom 功能系统配置文件
+# 版本: 1.0-SNAPSHOT
+
+# ==================== 功能系统基础设置 ====================
+functions:
+  # 是否启用功能系统
+  enabled: true
+  
+  # 功能执行超时时间 (毫秒)
+  execution_timeout: 5000
+  
+  # 是否启用功能冷却
+  cooldown_enabled: true
+  
+  # 默认冷却时间 (毫秒)
+  default_cooldown: 1000
+  
+  # 是否记录功能执行日志
+  log_execution: true
+  
+  # 最大并发执行数
+  max_concurrent_executions: 50
+
+# ==================== 功能类型配置 ====================
+function_types:
+  # 传送功能
+  teleport:
+    enabled: true
+    default_cooldown: 5000
+    max_distance: 1000
+    safe_teleport: true
+    particle_effect: "PORTAL"
+    sound_effect: "ENTITY_ENDERMAN_TELEPORT"
+  
+  # 宝箱功能
+  chest:
+    enabled: true
+    default_cooldown: 0
+    auto_refill: true
+    refill_interval: 3600
+    particle_effect: "VILLAGER_HAPPY"
+    sound_effect: "BLOCK_CHEST_OPEN"
+  
+  # 治疗功能
+  healing:
+    enabled: true
+    default_cooldown: 30000
+    heal_amount: 20
+    heal_type: "FULL" # FULL, PARTIAL, PERCENTAGE
+    particle_effect: "HEART"
+    sound_effect: "ENTITY_PLAYER_LEVELUP"
+  
+  # 机关功能
+  mechanism:
+    enabled: true
+    default_cooldown: 2000
+    activation_time: 100
+    particle_effect: "REDSTONE"
+    sound_effect: "BLOCK_LEVER_CLICK"
+  
+  # NPC功能
+  npc:
+    enabled: true
+    default_cooldown: 1000
+    interaction_range: 5
+    particle_effect: "VILLAGER_HAPPY"
+    sound_effect: "ENTITY_VILLAGER_AMBIENT"
+  
+  # 生成点功能
+  spawner:
+    enabled: true
+    default_cooldown: 10000
+    max_entities: 10
+    spawn_range: 5
+    particle_effect: "SMOKE_NORMAL"
+    sound_effect: "ENTITY_ZOMBIE_AMBIENT"
+  
+  # 检查点功能
+  checkpoint:
+    enabled: true
+    default_cooldown: 0
+    auto_save: true
+    particle_effect: "ENCHANTMENT_TABLE"
+    sound_effect: "ENTITY_EXPERIENCE_ORB_PICKUP"
+  
+  # 商店功能
+  shop:
+    enabled: true
+    default_cooldown: 1000
+    currency_type: "EMERALD"
+    particle_effect: "VILLAGER_HAPPY"
+    sound_effect: "ENTITY_VILLAGER_TRADE"
+  
+  # 陷阱功能
+  trap:
+    enabled: true
+    default_cooldown: 5000
+    damage_amount: 5
+    effect_duration: 100
+    particle_effect: "SMOKE_LARGE"
+    sound_effect: "ENTITY_TNT_PRIMED"
+  
+  # 开关功能
+  switch:
+    enabled: true
+    default_cooldown: 1000
+    toggle_state: true
+    particle_effect: "REDSTONE"
+    sound_effect: "BLOCK_STONE_BUTTON_CLICK_ON"
+  
+  # MythicMobs技能功能
+  mythic_skill:
+    enabled: true
+    default_cooldown: 3000
+    execution_mode: "command" # command, api
+    command_template: "mmcast {player} {skill}"
+    particle_effect: "SPELL_WITCH"
+    sound_effect: "ENTITY_EVOKER_CAST_SPELL"
+
+# ==================== 预定义功能配置 ====================
+predefined_functions:
+  # 欢迎消息
+  welcome_message:
+    type: "MESSAGE"
+    name: "欢迎消息"
+    description: "向玩家显示欢迎信息"
+    enabled: true
+    cooldown: 0
+    one_time_use: true
+    config:
+      message: "§6欢迎来到地牢！小心前方的危险..."
+      title: "§6地牢探险"
+      subtitle: "§e准备好迎接挑战了吗？"
+      sound: "ENTITY_PLAYER_LEVELUP"
+  
+  # 治疗喷泉
+  healing_fountain:
+    type: "HEALING"
+    name: "治疗喷泉"
+    description: "完全恢复玩家的生命值"
+    enabled: true
+    cooldown: 30000
+    config:
+      heal_amount: 20
+      heal_type: "FULL"
+      particle_effect: "HEART"
+      sound: "ENTITY_PLAYER_LEVELUP"
+      message: "§a你感到一股暖流涌过全身..."
+  
+  # 宝藏箱
+  treasure_chest:
+    type: "CHEST"
+    name: "宝藏箱"
+    description: "包含珍贵物品的宝箱"
+    enabled: true
+    cooldown: 0
+    one_time_use: true
+    config:
+      items:
+        - "DIAMOND:1"
+        - "EMERALD:3"
+        - "GOLD_INGOT:5"
+      particle_effect: "VILLAGER_HAPPY"
+      sound: "BLOCK_CHEST_OPEN"
+      message: "§6你发现了宝藏！"
+  
+  # Boss召唤
+  boss_summon:
+    type: "SPAWNER"
+    name: "Boss召唤"
+    description: "召唤强大的Boss"
+    enabled: true
+    cooldown: 0
+    one_time_use: true
+    config:
+      entity_type: "WITHER"
+      spawn_count: 1
+      particle_effect: "SMOKE_LARGE"
+      sound: "ENTITY_WITHER_SPAWN"
+      message: "§c强大的Boss已经苏醒！"
+  
+  # 传送门
+  teleport_portal:
+    type: "TELEPORT"
+    name: "传送门"
+    description: "传送到指定位置"
+    enabled: true
+    cooldown: 5000
+    config:
+      target_type: "LOCATION"
+      particle_effect: "PORTAL"
+      sound: "ENTITY_ENDERMAN_TELEPORT"
+      message: "§b你被传送到了新的位置..."
+  
+  # 火球陷阱
+  fireball_trap:
+    type: "TRAP"
+    name: "火球陷阱"
+    description: "发射火球攻击玩家"
+    enabled: true
+    cooldown: 10000
+    config:
+      damage_amount: 8
+      effect_type: "FIRE"
+      effect_duration: 60
+      particle_effect: "FLAME"
+      sound: "ENTITY_GHAST_SHOOT"
+      message: "§c你触发了火球陷阱！"
+  
+  # MythicMobs技能示例
+  lightning_strike:
+    type: "MYTHIC_SKILL"
+    name: "雷电打击"
+    description: "召唤雷电攻击目标"
+    enabled: true
+    cooldown: 15000
+    config:
+      skill_name: "LightningStrike"
+      target_type: "PLAYER"
+      particle_effect: "SPELL_WITCH"
+      sound: "ENTITY_LIGHTNING_BOLT_THUNDER"
+      message: "§e雷电从天而降！"
+
+# ==================== 执行条件配置 ====================
+execution_conditions:
+  # 玩家等级条件
+  player_level:
+    enabled: true
+    operators: [">=", "<=", "==", "!=", ">", "<"]
+  
+  # 物品条件
+  item_requirement:
+    enabled: true
+    check_inventory: true
+    consume_items: false
+  
+  # 权限条件
+  permission_requirement:
+    enabled: true
+    default_permission: "huandungeon.function.use"
+  
+  # 时间条件
+  time_condition:
+    enabled: true
+    time_formats: ["HH:mm", "HH:mm:ss"]
+  
+  # 世界条件
+  world_condition:
+    enabled: true
+    allowed_worlds: ["world", "world_nether", "world_the_end"]
+  
+  # 游戏模式条件
+  gamemode_condition:
+    enabled: true
+    allowed_gamemodes: ["SURVIVAL", "ADVENTURE"]
+
+# ==================== 目标类型配置 ====================
+target_types:
+  # 玩家目标
+  player:
+    enabled: true
+    max_range: 100
+    line_of_sight: false
+  
+  # 位置目标
+  location:
+    enabled: true
+    precision: 0.5
+  
+  # 区域目标
+  area:
+    enabled: true
+    max_radius: 50
+    shape_types: ["SPHERE", "CUBE", "CYLINDER"]
+  
+  # 选择器目标
+  selector:
+    enabled: true
+    max_entities: 20
+    supported_selectors: ["@p", "@a", "@r", "@e"]
+
+# ==================== 效果系统配置 ====================
+effects:
+  # 粒子效果
+  particles:
+    enabled: true
+    max_particles: 100
+    update_interval: 5
+    supported_types:
+      - "HEART"
+      - "VILLAGER_HAPPY"
+      - "PORTAL"
+      - "FLAME"
+      - "SMOKE_NORMAL"
+      - "REDSTONE"
+      - "ENCHANTMENT_TABLE"
+  
+  # 声音效果
+  sounds:
+    enabled: true
+    max_volume: 1.0
+    max_pitch: 2.0
+    supported_sounds:
+      - "ENTITY_PLAYER_LEVELUP"
+      - "BLOCK_CHEST_OPEN"
+      - "ENTITY_ENDERMAN_TELEPORT"
+      - "ENTITY_VILLAGER_TRADE"
+      - "BLOCK_LEVER_CLICK"
+  
+  # 药水效果
+  potion_effects:
+    enabled: true
+    max_duration: 6000
+    max_amplifier: 5
+    supported_effects:
+      - "SPEED"
+      - "STRENGTH"
+      - "REGENERATION"
+      - "FIRE_RESISTANCE"
+      - "NIGHT_VISION"
+
+# ==================== 性能优化配置 ====================
+performance:
+  # 异步执行
+  async_execution: true
+  
+  # 批量处理
+  batch_processing:
+    enabled: true
+    batch_size: 10
+    batch_interval: 50
+  
+  # 缓存设置
+  cache:
+    enabled: true
+    cache_size: 200
+    cache_expire_time: 1800
+  
+  # 限流设置
+  rate_limiting:
+    enabled: true
+    max_executions_per_second: 10
+    max_executions_per_player: 5
+
+# ==================== 配置文件版本 ====================
+config_version: "1.0"

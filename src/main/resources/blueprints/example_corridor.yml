@@ -1,0 +1,222 @@
+# 示例走廊蓝图
+# 这是一个基础的走廊蓝图示例，用于连接房间
+
+blueprint:
+  # 基本信息
+  name: "基础走廊"
+  type: "CORRIDOR"
+  author: "HuanDungeonRandom"
+  version: "1.0"
+  description: "一个简单的直线走廊，用于连接房间"
+  
+  # 尺寸信息
+  size:
+    width: 3
+    height: 4
+    length: 10
+  
+  # 权重 (用于随机选择)
+  weight: 8
+  
+  # 门的位置和朝向 (走廊两端)
+  doors:
+    - position: [1, 1, 0]
+      direction: "NORTH"
+      material: "AIR"
+    - position: [1, 1, 9]
+      direction: "SOUTH"
+      material: "AIR"
+  
+  # 方块数据 (相对坐标)
+  blocks:
+    # 地板
+    - position: [0, 0, 0]
+      size: [3, 1, 10]
+      material: "STONE"
+      fill: true
+    
+    # 左墙
+    - position: [0, 1, 0]
+      size: [1, 3, 10]
+      material: "STONE_BRICKS"
+      fill: true
+    
+    # 右墙
+    - position: [2, 1, 0]
+      size: [1, 3, 10]
+      material: "STONE_BRICKS"
+      fill: true
+    
+    # 天花板
+    - position: [0, 3, 0]
+      size: [3, 1, 10]
+      material: "STONE_BRICKS"
+      fill: true
+    
+    # 中间通道 (空气)
+    - position: [1, 1, 0]
+      size: [1, 2, 10]
+      material: "AIR"
+      fill: true
+    
+    # 照明火把
+    - position: [0, 2, 3]
+      material: "TORCH"
+      data:
+        facing: "EAST"
+    - position: [2, 2, 6]
+      material: "TORCH"
+      data:
+        facing: "WEST"
+  
+  # 功能点配置 (走廊通常没有功能点，但可以添加陷阱等)
+  functions:
+    - id: "corridor_trap"
+      type: "TRAP"
+      position: [1, 1, 5]
+      name: "压力板陷阱"
+      description: "踩到压力板会触发陷阱"
+      enabled: false  # 默认禁用，可在特定主题中启用
+      config:
+        trigger_block: "STONE_PRESSURE_PLATE"
+        damage_amount: 2
+        effect_type: "SLOWNESS"
+        effect_duration: 100
+        particle_effect: "SMOKE_NORMAL"
+        sound: "ENTITY_TNT_PRIMED"
+  
+  # 触发器配置
+  triggers:
+    - id: "corridor_enter"
+      type: "PLAYER_ENTER"
+      area:
+        center: [1, 2, 2]
+        radius: 1
+      functions:
+        - "corridor_ambient_sound"
+      cooldown: 30000
+      enabled: false  # 可选触发器
+  
+  # 生成规则
+  generation_rules:
+    # 旋转设置
+    rotation:
+      enabled: true
+      angles: [0, 90, 180, 270]
+    
+    # 长度变化 (走廊可以有不同长度)
+    length_variation:
+      enabled: true
+      min_length: 5
+      max_length: 15
+      step: 1
+    
+    # 材料替换规则
+    material_replacement:
+      enabled: true
+      rules:
+        "STONE_BRICKS":
+          - material: "COBBLESTONE"
+            chance: 0.05
+          - material: "MOSSY_STONE_BRICKS"
+            chance: 0.03
+    
+    # 装饰变化
+    decoration_variation:
+      enabled: true
+      torch_spacing: [3, 4, 5]  # 火把间距变化
+      wall_decorations:
+        - material: "COBWEB"
+          chance: 0.02
+        - material: "IRON_BARS"
+          chance: 0.01
+  
+  # 连接规则
+  connection_rules:
+    # 连接点验证
+    connection_validation:
+      enabled: true
+      check_alignment: true
+      check_height: true
+    
+    # 自动调整
+    auto_adjustment:
+      enabled: true
+      adjust_height: true
+      adjust_width: false
+    
+    # 连接优先级
+    connection_priority: 5
+
+# 变体配置 (同一个走廊的不同变体)
+variants:
+  # 转弯走廊
+  turn_corridor:
+    name: "转弯走廊"
+    description: "L型转弯走廊"
+    size:
+      width: 5
+      height: 4
+      length: 5
+    doors:
+      - position: [1, 1, 0]
+        direction: "NORTH"
+      - position: [4, 1, 3]
+        direction: "EAST"
+    weight: 6
+  
+  # 宽走廊
+  wide_corridor:
+    name: "宽走廊"
+    description: "更宽的走廊，适合大型地牢"
+    size:
+      width: 5
+      height: 4
+      length: 10
+    doors:
+      - position: [2, 1, 0]
+        direction: "NORTH"
+      - position: [2, 1, 9]
+        direction: "SOUTH"
+    weight: 4
+
+# 主题适应
+theme_adaptations:
+  fire_dungeon:
+    materials:
+      "STONE_BRICKS": "NETHER_BRICKS"
+      "STONE": "MAGMA_BLOCK"
+      "TORCH": "FIRE"
+    decorations:
+      - material: "LAVA"
+        positions: [[0, 0, 4], [2, 0, 6]]
+        chance: 0.3
+  
+  ice_dungeon:
+    materials:
+      "STONE_BRICKS": "PACKED_ICE"
+      "STONE": "ICE"
+      "TORCH": "BLUE_ICE"
+    decorations:
+      - material: "SNOW"
+        positions: [[1, 1, 3], [1, 1, 7]]
+        chance: 0.5
+  
+  forest_dungeon:
+    materials:
+      "STONE_BRICKS": "OAK_LOG"
+      "STONE": "GRASS_BLOCK"
+      "TORCH": "LANTERN"
+    decorations:
+      - material: "VINE"
+        positions: [[0, 2, 2], [2, 2, 8]]
+        chance: 0.4
+
+# 元数据
+metadata:
+  created: "2024-01-01"
+  last_modified: "2024-01-01"
+  tags: ["corridor", "basic", "connection", "linear"]
+  difficulty: 0
+  estimated_time: 60
+  max_players: 8

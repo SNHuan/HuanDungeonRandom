@@ -1,0 +1,259 @@
+# HuanDungeonRandom 消息配置文件
+# 版本: 1.0-SNAPSHOT
+# 支持颜色代码: &0-&9, &a-&f, &k-&r
+# 支持十六进制颜色: &#RRGGBB
+
+# ==================== 通用消息 ====================
+general:
+  prefix: "&6[HuanDungeonRandom]&r "
+  no_permission: "&c您没有权限执行此操作！"
+  player_only: "&c此命令只能由玩家执行！"
+  invalid_args: "&c参数无效！使用 &f{usage} &c查看正确用法。"
+  command_error: "&c命令执行时发生错误，请查看控制台日志！"
+  reload_success: "&a配置文件重载成功！"
+  reload_failed: "&c配置文件重载失败！请检查配置文件格式。"
+
+# ==================== 地牢相关消息 ====================
+dungeon:
+  # 创建相关
+  create_success: "&a成功创建地牢 &f{id}&a，主题: &f{theme}"
+  create_failed: "&c地牢创建失败: {reason}"
+  create_in_progress: "&e正在生成地牢，请稍候..."
+  create_timeout: "&c地牢生成超时，请重试！"
+  
+  # 进入相关
+  enter_success: "&a欢迎来到地牢 &f{id}&a！"
+  enter_failed: "&c无法进入地牢: {reason}"
+  enter_permission_denied: "&c您没有权限进入此地牢！"
+  enter_dungeon_full: "&c地牢已满，无法进入！"
+  
+  # 离开相关
+  leave_success: "&a您已离开地牢 &f{id}"
+  leave_failed: "&c离开地牢失败: {reason}"
+  
+  # 传送相关
+  teleport_success: "&a已传送到地牢 &f{id}"
+  teleport_failed: "&c传送失败: {reason}"
+  teleport_not_found: "&c找不到指定的地牢！"
+  teleport_unsafe: "&c目标位置不安全，传送取消！"
+  
+  # 删除相关
+  delete_success: "&a成功删除地牢 &f{id}"
+  delete_failed: "&c删除地牢失败: {reason}"
+  delete_not_found: "&c找不到指定的地牢！"
+  delete_has_players: "&c地牢中还有玩家，无法删除！使用 &f/hdr dungeon delete {id} force &c强制删除。"
+  
+  # 列表相关
+  list_header: "&6=== 活跃地牢列表 ==="
+  list_item: "&e{id} &7- &f{theme} &7- &a{players}人 &7- &b{status}"
+  list_empty: "&e当前没有活跃的地牢。"
+  list_footer: "&7总计: &f{total} &7个地牢"
+  
+  # 信息相关
+  info_header: "&6=== 地牢信息: {id} ==="
+  info_theme: "&e主题: &f{theme}"
+  info_status: "&e状态: &f{status}"
+  info_players: "&e玩家: &f{players}/{max_players}"
+  info_created: "&e创建时间: &f{created}"
+  info_location: "&e位置: &f{world} {x}, {y}, {z}"
+  info_size: "&e大小: &f{width}x{height}x{length}"
+  info_progress: "&e进度: &f{progress}%"
+  
+  # 状态消息
+  status_inactive: "&7未激活"
+  status_active: "&a活跃"
+  status_paused: "&e暂停"
+  status_completed: "&2完成"
+  status_failed: "&c失败"
+  status_generating: "&b生成中"
+
+# ==================== 蓝图相关消息 ====================
+blueprint:
+  # 加载相关
+  load_success: "&a成功加载蓝图 &f{name}"
+  load_failed: "&c蓝图加载失败: {reason}"
+  load_not_found: "&c找不到蓝图文件: {file}"
+  load_invalid_format: "&c蓝图文件格式无效！"
+  
+  # 重载相关
+  reload_success: "&a成功重载 &f{count} &a个蓝图"
+  reload_failed: "&c蓝图重载失败: {reason}"
+  
+  # 列表相关
+  list_header: "&6=== 蓝图列表 ==="
+  list_item: "&e{name} &7- &f{type} &7- &a{size} &7- &b权重:{weight}"
+  list_empty: "&e当前没有可用的蓝图。"
+  list_footer: "&7总计: &f{total} &7个蓝图"
+  
+  # 信息相关
+  info_header: "&6=== 蓝图信息: {name} ==="
+  info_type: "&e类型: &f{type}"
+  info_size: "&e尺寸: &f{width}x{height}x{length}"
+  info_doors: "&e门数量: &f{doors}"
+  info_weight: "&e权重: &f{weight}"
+  info_author: "&e作者: &f{author}"
+  info_description: "&e描述: &f{description}"
+  
+  # 验证相关
+  validation_success: "&a蓝图验证通过！"
+  validation_failed: "&c蓝图验证失败: {errors}"
+  validation_warning: "&e蓝图验证警告: {warnings}"
+
+# ==================== 功能相关消息 ====================
+function:
+  # 执行相关
+  execute_success: "&a功能 &f{name} &a执行成功！"
+  execute_failed: "&c功能执行失败: {reason}"
+  execute_cooldown: "&e功能冷却中，还需等待 &f{time} &e秒"
+  execute_no_permission: "&c您没有权限执行此功能！"
+  execute_conditions_not_met: "&c执行条件不满足: {conditions}"
+  
+  # 列表相关
+  list_header: "&6=== 功能列表 ==="
+  list_item: "&e{id} &7- &f{name} &7- &a{type} &7- &b{status}"
+  list_empty: "&e当前没有可用的功能。"
+  list_footer: "&7总计: &f{total} &7个功能"
+  
+  # 信息相关
+  info_header: "&6=== 功能信息: {id} ==="
+  info_name: "&e名称: &f{name}"
+  info_type: "&e类型: &f{type}"
+  info_description: "&e描述: &f{description}"
+  info_cooldown: "&e冷却时间: &f{cooldown}ms"
+  info_enabled: "&e状态: &f{enabled}"
+  info_executions: "&e执行次数: &f{executions}"
+  
+  # 状态消息
+  status_enabled: "&a启用"
+  status_disabled: "&c禁用"
+  status_cooldown: "&e冷却中"
+
+# ==================== 触发器相关消息 ====================
+trigger:
+  # 触发相关
+  triggered: "&a触发器 &f{name} &a已触发！"
+  trigger_failed: "&c触发器触发失败: {reason}"
+  trigger_cooldown: "&e触发器冷却中，还需等待 &f{time} &e秒"
+  trigger_conditions_not_met: "&c触发条件不满足: {conditions}"
+  
+  # 手动触发
+  manual_success: "&a手动触发 &f{name} &a成功！"
+  manual_failed: "&c手动触发失败: {reason}"
+  manual_not_found: "&c找不到指定的触发器！"
+  manual_no_permission: "&c您没有权限手动触发此触发器！"
+  
+  # 列表相关
+  list_header: "&6=== 触发器列表 ==="
+  list_item: "&e{id} &7- &f{name} &7- &a{type} &7- &b{status}"
+  list_empty: "&e当前没有可用的触发器。"
+  list_footer: "&7总计: &f{total} &7个触发器"
+  
+  # 信息相关
+  info_header: "&6=== 触发器信息: {id} ==="
+  info_name: "&e名称: &f{name}"
+  info_type: "&e类型: &f{type}"
+  info_description: "&e描述: &f{description}"
+  info_area: "&e区域: &f{area}"
+  info_functions: "&e关联功能: &f{functions}"
+  info_conditions: "&e触发条件: &f{conditions}"
+
+# ==================== 队伍相关消息 ====================
+team:
+  # 创建相关
+  create_success: "&a成功创建队伍！"
+  create_failed: "&c队伍创建失败: {reason}"
+  create_already_in_team: "&c您已经在一个队伍中了！"
+  
+  # 邀请相关
+  invite_sent: "&a已向 &f{player} &a发送队伍邀请！"
+  invite_received: "&e{player} &e邀请您加入队伍！使用 &f/hdr team accept &e接受邀请。"
+  invite_failed: "&c邀请失败: {reason}"
+  invite_expired: "&c队伍邀请已过期！"
+  
+  # 加入相关
+  join_success: "&a成功加入队伍！"
+  join_failed: "&c加入队伍失败: {reason}"
+  join_team_full: "&c队伍已满，无法加入！"
+  
+  # 离开相关
+  leave_success: "&a您已离开队伍！"
+  leave_failed: "&c离开队伍失败: {reason}"
+  leave_not_in_team: "&c您不在任何队伍中！"
+  
+  # 解散相关
+  disband_success: "&a队伍已解散！"
+  disband_failed: "&c解散队伍失败: {reason}"
+  disband_not_leader: "&c只有队长可以解散队伍！"
+
+# ==================== 游戏内提示消息 ====================
+gameplay:
+  # 地牢探索
+  dungeon_welcome: "&6欢迎来到地牢！小心前方的危险..."
+  dungeon_progress: "&e地牢进度: &f{progress}%"
+  dungeon_completed: "&a恭喜！您已完成地牢挑战！"
+  dungeon_failed: "&c很遗憾，挑战失败了！"
+  
+  # 功能交互
+  healing_fountain: "&a您感到一股暖流涌过全身..."
+  treasure_found: "&6您发现了宝藏！"
+  trap_triggered: "&c您触发了陷阱！小心！"
+  checkpoint_saved: "&a进度已保存！"
+  
+  # 战斗相关
+  boss_spawned: "&c强大的Boss已经苏醒！准备战斗！"
+  boss_defeated: "&a恭喜！您击败了Boss！"
+  monster_wave: "&e第 &f{wave} &e波怪物来袭！"
+  
+  # 时间相关
+  time_warning: "&e注意！还有 &f{time} &e分钟时间！"
+  time_up: "&c时间到！挑战失败！"
+  
+  # 物品相关
+  item_required: "&c需要物品: &f{item}"
+  item_consumed: "&e消耗了物品: &f{item}"
+  item_received: "&a获得物品: &f{item}"
+
+# ==================== 错误消息 ====================
+errors:
+  # 通用错误
+  unknown_error: "&c发生未知错误！"
+  internal_error: "&c内部错误，请联系管理员！"
+  timeout_error: "&c操作超时！"
+  permission_denied: "&c权限不足！"
+  
+  # 配置错误
+  config_load_failed: "&c配置文件加载失败！"
+  config_save_failed: "&c配置文件保存失败！"
+  config_invalid: "&c配置文件格式无效！"
+  
+  # 数据错误
+  data_load_failed: "&c数据加载失败！"
+  data_save_failed: "&c数据保存失败！"
+  data_corrupted: "&c数据文件损坏！"
+  
+  # 网络错误
+  connection_failed: "&c连接失败！"
+  network_timeout: "&c网络超时！"
+
+# ==================== 帮助消息 ====================
+help:
+  # 主帮助
+  main_header: "&6=== HuanDungeonRandom 命令帮助 ==="
+  main_footer: "&7使用 &f/hdr <子命令> help &7查看具体命令帮助"
+  
+  # 子命令帮助
+  dungeon_help: "&e/hdr dungeon &7- 地牢管理命令"
+  blueprint_help: "&e/hdr blueprint &7- 蓝图管理命令"
+  function_help: "&e/hdr function &7- 功能管理命令"
+  trigger_help: "&e/hdr trigger &7- 触发器管理命令"
+  team_help: "&e/hdr team &7- 队伍管理命令"
+  reload_help: "&e/hdr reload &7- 重载插件配置"
+  
+  # 详细帮助
+  command_usage: "&e用法: &f{usage}"
+  command_description: "&7{description}"
+  command_permission: "&7权限: &f{permission}"
+  command_aliases: "&7别名: &f{aliases}"
+
+# ==================== 配置文件版本 ====================
+config_version: "1.0"

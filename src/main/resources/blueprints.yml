@@ -1,0 +1,330 @@
+# HuanDungeonRandom 蓝图系统配置文件
+# 版本: 1.0-SNAPSHOT
+
+# ==================== 蓝图系统基础设置 ====================
+blueprints:
+  # 是否启用蓝图缓存
+  cache_enabled: true
+  
+  # 蓝图缓存大小
+  cache_size: 100
+  
+  # 是否自动加载蓝图
+  auto_load: true
+  
+  # 蓝图文件格式: yaml, json, schematic
+  default_format: "yaml"
+  
+  # 蓝图验证设置
+  validation:
+    # 是否启用严格验证
+    strict_mode: true
+    # 是否检查门的连通性
+    check_door_connectivity: true
+    # 是否验证材料有效性
+    validate_materials: true
+
+# ==================== 蓝图目录设置 ====================
+directories:
+  # 蓝图根目录
+  root: "blueprints"
+  
+  # 各类型蓝图子目录
+  subdirectories:
+    tiles: "tiles"
+    rooms: "rooms"
+    corridors: "corridors"
+    structures: "structures"
+    dungeons: "dungeons"
+  
+  # 是否自动创建目录
+  auto_create: true
+  
+  # 是否递归扫描子目录
+  recursive_scan: true
+
+# ==================== 蓝图类型配置 ====================
+types:
+  # 瓦片蓝图配置
+  tile:
+    # 默认尺寸
+    default_size:
+      width: 10
+      height: 5
+      length: 10
+    
+    # 最小/最大尺寸限制
+    size_limits:
+      min_width: 5
+      max_width: 20
+      min_height: 3
+      max_height: 10
+      min_length: 5
+      max_length: 20
+    
+    # 是否必须有门
+    require_doors: true
+    
+    # 最小门数量
+    min_doors: 1
+    
+    # 最大门数量
+    max_doors: 4
+    
+    # 权重范围
+    weight_range:
+      min: 1
+      max: 100
+  
+  # 房间蓝图配置
+  room:
+    default_size:
+      width: 15
+      height: 6
+      length: 15
+    
+    size_limits:
+      min_width: 8
+      max_width: 30
+      min_height: 4
+      max_height: 15
+      min_length: 8
+      max_length: 30
+    
+    require_doors: true
+    min_doors: 1
+    max_doors: 6
+    
+    weight_range:
+      min: 1
+      max: 50
+  
+  # 走廊蓝图配置
+  corridor:
+    default_size:
+      width: 3
+      height: 4
+      length: 10
+    
+    size_limits:
+      min_width: 2
+      max_width: 5
+      min_height: 3
+      max_height: 6
+      min_length: 5
+      max_length: 20
+    
+    require_doors: true
+    min_doors: 2
+    max_doors: 2
+    
+    weight_range:
+      min: 1
+      max: 30
+  
+  # 结构蓝图配置
+  structure:
+    default_size:
+      width: 5
+      height: 8
+      length: 5
+    
+    size_limits:
+      min_width: 3
+      max_width: 15
+      min_height: 3
+      max_height: 20
+      min_length: 3
+      max_length: 15
+    
+    require_doors: false
+    min_doors: 0
+    max_doors: 0
+    
+    weight_range:
+      min: 1
+      max: 20
+  
+  # 完整地牢蓝图配置
+  dungeon:
+    default_size:
+      width: 100
+      height: 20
+      length: 100
+    
+    size_limits:
+      min_width: 50
+      max_width: 500
+      min_height: 10
+      max_height: 50
+      min_length: 50
+      max_length: 500
+    
+    require_doors: false
+    min_doors: 0
+    max_doors: 0
+    
+    weight_range:
+      min: 1
+      max: 10
+
+# ==================== 门系统配置 ====================
+doors:
+  # 支持的门朝向
+  supported_directions:
+    - NORTH
+    - SOUTH
+    - EAST
+    - WEST
+  
+  # 门的默认材料
+  default_materials:
+    frame: "STONE_BRICKS"
+    opening: "AIR"
+  
+  # 门的尺寸设置
+  dimensions:
+    # 门的宽度
+    width: 1
+    # 门的高度
+    height: 2
+  
+  # 门的连接设置
+  connection:
+    # 连接检测范围
+    detection_range: 5
+    # 是否允许门重叠
+    allow_overlap: false
+    # 连接优先级
+    priority_order:
+      - NORTH
+      - EAST
+      - SOUTH
+      - WEST
+
+# ==================== 材料映射配置 ====================
+materials:
+  # 材料别名映射
+  aliases:
+    stone: "STONE"
+    cobble: "COBBLESTONE"
+    brick: "STONE_BRICKS"
+    wood: "OAK_PLANKS"
+    glass: "GLASS"
+    air: "AIR"
+  
+  # 材料组定义
+  groups:
+    walls:
+      - "STONE_BRICKS"
+      - "COBBLESTONE"
+      - "STONE"
+      - "DEEPSLATE_BRICKS"
+    
+    floors:
+      - "STONE"
+      - "COBBLESTONE"
+      - "STONE_BRICKS"
+      - "POLISHED_ANDESITE"
+    
+    decorations:
+      - "TORCH"
+      - "LANTERN"
+      - "IRON_BARS"
+      - "COBWEB"
+  
+  # 材料验证设置
+  validation:
+    # 是否检查材料有效性
+    check_validity: true
+    # 是否允许空气方块
+    allow_air: true
+    # 禁用的材料
+    blacklisted_materials:
+      - "BEDROCK"
+      - "BARRIER"
+      - "COMMAND_BLOCK"
+
+# ==================== 预览系统配置 ====================
+preview:
+  # 是否启用预览功能
+  enabled: true
+  
+  # 预览材料
+  preview_material: "GLASS"
+  
+  # 预览持续时间 (秒)
+  duration: 30
+  
+  # 预览更新间隔 (tick)
+  update_interval: 20
+  
+  # 是否显示门的位置
+  show_doors: true
+  
+  # 门预览材料
+  door_preview_material: "REDSTONE_BLOCK"
+
+# ==================== 导入导出设置 ====================
+import_export:
+  # 支持的导入格式
+  import_formats:
+    - "yaml"
+    - "json"
+    - "schematic"
+  
+  # 支持的导出格式
+  export_formats:
+    - "yaml"
+    - "json"
+    - "schematic"
+  
+  # WorldEdit集成
+  worldedit:
+    # 是否启用WorldEdit集成
+    enabled: true
+    # 原理图文件扩展名
+    schematic_extension: ".schem"
+    # 是否保留实体
+    include_entities: false
+  
+  # 导入验证
+  import_validation:
+    # 是否验证导入的蓝图
+    enabled: true
+    # 是否自动修复错误
+    auto_fix: true
+    # 是否显示验证报告
+    show_report: true
+
+# ==================== 性能优化设置 ====================
+performance:
+  # 蓝图加载设置
+  loading:
+    # 是否异步加载
+    async_loading: true
+    # 加载超时时间 (秒)
+    timeout: 30
+    # 批量加载大小
+    batch_size: 10
+  
+  # 内存管理
+  memory:
+    # 是否启用内存优化
+    optimization: true
+    # 内存清理间隔 (秒)
+    cleanup_interval: 300
+    # 最大内存使用量 (MB)
+    max_memory_usage: 512
+  
+  # 缓存策略
+  cache_strategy:
+    # 缓存策略: LRU, LFU, FIFO
+    type: "LRU"
+    # 缓存预热
+    preload: true
+    # 缓存统计
+    statistics: true
+
+# ==================== 配置文件版本 ====================
+config_version: "1.0"

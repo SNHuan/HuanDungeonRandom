@@ -1,0 +1,374 @@
+# HuanDungeonRandom 触发器系统配置文件
+# 版本: 1.0-SNAPSHOT
+
+# ==================== 触发器系统基础设置 ====================
+triggers:
+  # 是否启用触发器系统
+  enabled: true
+  
+  # 触发器检查间隔 (tick)
+  check_interval: 20
+  
+  # 最大并发触发器数量
+  max_concurrent_triggers: 100
+  
+  # 是否记录触发器执行日志
+  log_execution: true
+  
+  # 触发器超时时间 (毫秒)
+  execution_timeout: 10000
+
+# ==================== 触发器类型配置 ====================
+trigger_types:
+  # 玩家进入触发器
+  player_enter:
+    enabled: true
+    check_interval: 10
+    detection_range: 1.0
+    require_line_of_sight: false
+  
+  # 玩家离开触发器
+  player_leave:
+    enabled: true
+    check_interval: 10
+    detection_range: 1.0
+    grace_period: 100
+  
+  # 玩家交互触发器
+  player_interact:
+    enabled: true
+    interaction_types: ["RIGHT_CLICK", "LEFT_CLICK"]
+    require_item: false
+    interaction_range: 5.0
+  
+  # 玩家移动触发器
+  player_move:
+    enabled: true
+    check_interval: 5
+    min_distance: 0.1
+    track_direction: true
+  
+  # 方块破坏触发器
+  block_break:
+    enabled: true
+    check_tool: true
+    drop_items: true
+    experience_drop: true
+  
+  # 方块放置触发器
+  block_place:
+    enabled: true
+    check_material: true
+    check_permission: true
+    cancel_placement: false
+  
+  # 红石变化触发器
+  redstone_change:
+    enabled: true
+    power_threshold: 1
+    detect_indirect: true
+    debounce_time: 50
+  
+  # 时间间隔触发器
+  time_interval:
+    enabled: true
+    min_interval: 1000
+    max_interval: 3600000
+    precision: 50
+  
+  # 时间延迟触发器
+  time_delay:
+    enabled: true
+    min_delay: 100
+    max_delay: 3600000
+    precision: 50
+  
+  # 条件满足触发器
+  condition_met:
+    enabled: true
+    check_interval: 100
+    condition_types: ["PLAYER_LEVEL", "ITEM_COUNT", "HEALTH", "LOCATION"]
+  
+  # 信号接收触发器
+  signal_received:
+    enabled: true
+    signal_types: ["REDSTONE", "COMMAND", "API", "CUSTOM"]
+    signal_range: 50
+  
+  # 地牢开始触发器
+  dungeon_start:
+    enabled: true
+    delay_after_start: 1000
+    check_all_players: true
+  
+  # 地牢结束触发器
+  dungeon_end:
+    enabled: true
+    trigger_on_completion: true
+    trigger_on_failure: true
+    trigger_on_timeout: true
+  
+  # 手动触发器
+  manual:
+    enabled: true
+    require_permission: true
+    cooldown: 1000
+
+# ==================== 预定义触发器配置 ====================
+predefined_triggers:
+  # 地牢入口触发器
+  dungeon_entrance:
+    type: "PLAYER_ENTER"
+    name: "地牢入口"
+    description: "玩家进入地牢时触发"
+    enabled: true
+    area:
+      center: [0, 64, 0]
+      radius: 3
+      shape: "SPHERE"
+    functions:
+      - "welcome_message"
+      - "start_dungeon_timer"
+    conditions:
+      - "player.gamemode == SURVIVAL"
+    cooldown: 5000
+  
+  # Boss房间触发器
+  boss_room_trigger:
+    type: "PLAYER_ENTER"
+    name: "Boss房间触发"
+    description: "玩家进入Boss房间时触发"
+    enabled: true
+    area:
+      center: [100, 64, 100]
+      radius: 10
+      shape: "CUBE"
+    functions:
+      - "boss_summon"
+      - "boss_music"
+      - "lock_doors"
+    conditions:
+      - "dungeon.progress >= 80"
+    cooldown: 0
+    one_time_use: true
+  
+  # 宝藏房间触发器
+  treasure_room_trigger:
+    type: "PLAYER_INTERACT"
+    name: "宝藏房间触发"
+    description: "玩家与宝箱交互时触发"
+    enabled: true
+    target_block: "CHEST"
+    functions:
+      - "treasure_chest"
+      - "treasure_message"
+    conditions:
+      - "player.hasItem('treasure_key')"
+    cooldown: 0
+    one_time_use: true
+  
+  # 陷阱触发器
+  trap_trigger:
+    type: "PLAYER_MOVE"
+    name: "陷阱触发"
+    description: "玩家踩到压力板时触发"
+    enabled: true
+    target_block: "STONE_PRESSURE_PLATE"
+    functions:
+      - "fireball_trap"
+      - "trap_warning"
+    cooldown: 10000
+  
+  # 治疗点触发器
+  healing_trigger:
+    type: "PLAYER_INTERACT"
+    name: "治疗点触发"
+    description: "玩家与治疗点交互时触发"
+    enabled: true
+    target_block: "BEACON"
+    functions:
+      - "healing_fountain"
+    conditions:
+      - "player.health < 20"
+    cooldown: 30000
+  
+  # 时间挑战触发器
+  time_challenge:
+    type: "TIME_INTERVAL"
+    name: "时间挑战"
+    description: "定时生成怪物增加难度"
+    enabled: true
+    interval: 60000
+    functions:
+      - "spawn_monsters"
+      - "difficulty_increase"
+    conditions:
+      - "dungeon.active == true"
+    max_executions: 10
+  
+  # 完成触发器
+  completion_trigger:
+    type: "CONDITION_MET"
+    name: "完成触发"
+    description: "地牢完成时触发"
+    enabled: true
+    condition: "dungeon.progress >= 100"
+    functions:
+      - "completion_reward"
+      - "completion_message"
+      - "teleport_exit"
+    cooldown: 0
+    one_time_use: true
+  
+  # 紧急退出触发器
+  emergency_exit:
+    type: "MANUAL"
+    name: "紧急退出"
+    description: "手动触发的紧急退出"
+    enabled: true
+    functions:
+      - "emergency_teleport"
+      - "save_progress"
+    permission: "huandungeon.emergency"
+    cooldown: 5000
+
+# ==================== 触发器条件配置 ====================
+trigger_conditions:
+  # 玩家条件
+  player_conditions:
+    # 生命值条件
+    health:
+      operators: [">=", "<=", "==", "!=", ">", "<"]
+      range: [0, 20]
+    
+    # 等级条件
+    level:
+      operators: [">=", "<=", "==", "!=", ">", "<"]
+      range: [0, 100]
+    
+    # 游戏模式条件
+    gamemode:
+      allowed_modes: ["SURVIVAL", "ADVENTURE", "CREATIVE", "SPECTATOR"]
+    
+    # 物品条件
+    items:
+      check_inventory: true
+      check_hotbar: true
+      check_armor: true
+      consume_items: false
+  
+  # 地牢条件
+  dungeon_conditions:
+    # 进度条件
+    progress:
+      operators: [">=", "<=", "==", "!=", ">", "<"]
+      range: [0, 100]
+    
+    # 状态条件
+    state:
+      allowed_states: ["INACTIVE", "ACTIVE", "PAUSED", "COMPLETED", "FAILED"]
+    
+    # 时间条件
+    time:
+      operators: [">=", "<=", "==", "!=", ">", "<"]
+      unit: "SECONDS"
+  
+  # 环境条件
+  environment_conditions:
+    # 时间条件
+    world_time:
+      operators: [">=", "<=", "==", "!=", ">", "<"]
+      range: [0, 24000]
+    
+    # 天气条件
+    weather:
+      allowed_weather: ["CLEAR", "RAIN", "THUNDER"]
+    
+    # 世界条件
+    world:
+      allowed_worlds: ["world", "world_nether", "world_the_end"]
+
+# ==================== 触发器区域配置 ====================
+trigger_areas:
+  # 区域形状
+  shapes:
+    sphere:
+      enabled: true
+      max_radius: 100
+    
+    cube:
+      enabled: true
+      max_size: 200
+    
+    cylinder:
+      enabled: true
+      max_radius: 100
+      max_height: 50
+    
+    polygon:
+      enabled: true
+      max_points: 20
+  
+  # 区域检测
+  detection:
+    # 检测精度
+    precision: 0.5
+    
+    # 边界检测
+    boundary_check: true
+    
+    # 垂直检测
+    vertical_check: true
+    
+    # 检测间隔
+    check_interval: 10
+
+# ==================== 性能优化配置 ====================
+performance:
+  # 异步处理
+  async_processing: true
+  
+  # 批量处理
+  batch_processing:
+    enabled: true
+    batch_size: 20
+    batch_interval: 5
+  
+  # 缓存设置
+  cache:
+    enabled: true
+    cache_size: 500
+    cache_expire_time: 3600
+  
+  # 优化设置
+  optimization:
+    # 智能检测间隔
+    smart_intervals: true
+    
+    # 距离优化
+    distance_optimization: true
+    
+    # 视线优化
+    line_of_sight_optimization: true
+    
+    # 区域索引
+    area_indexing: true
+
+# ==================== 调试配置 ====================
+debug:
+  # 是否启用调试模式
+  enabled: false
+  
+  # 调试信息显示
+  show_trigger_areas: false
+  show_execution_time: false
+  show_condition_results: false
+  
+  # 调试粒子效果
+  debug_particles:
+    enabled: false
+    particle_type: "REDSTONE"
+    update_interval: 20
+
+# ==================== 配置文件版本 ====================
+config_version: "1.0"

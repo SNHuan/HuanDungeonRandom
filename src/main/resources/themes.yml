@@ -1,0 +1,337 @@
+# HuanDungeonRandom 地牢主题配置文件
+# 版本: 1.0-SNAPSHOT
+
+# ==================== 主题系统设置 ====================
+themes:
+  # 默认主题
+  default:
+    # 主题基本信息
+    name: "默认主题"
+    description: "经典的石砖地牢主题"
+    author: "HuanDungeonRandom"
+    version: "1.0"
+    
+    # 材料配置
+    materials:
+      # 墙壁材料
+      wall: "STONE_BRICKS"
+      # 地板材料
+      floor: "STONE"
+      # 天花板材料
+      ceiling: "STONE_BRICKS"
+      # 装饰材料
+      decoration: "TORCH"
+      # 门框材料
+      door_frame: "STONE_BRICKS"
+      # 门洞材料
+      door_opening: "AIR"
+    
+    # 生成参数
+    generation:
+      # 最小房间数量
+      min_rooms: 5
+      # 最大房间数量
+      max_rooms: 15
+      # 走廊生成概率
+      corridor_chance: 0.7
+      # 结构装饰概率
+      structure_chance: 0.3
+      # 房间大小变化范围
+      room_size_variance: 0.2
+    
+    # 环境设置
+    environment:
+      # 光照等级 (0-15)
+      lighting: 8
+      # 是否生成敌对生物
+      spawn_hostile: true
+      # 难度倍数
+      difficulty_multiplier: 1.0
+      # 环境音效
+      ambient_sound: "AMBIENT_CAVE"
+    
+    # 蓝图权重配置
+    blueprint_weights:
+      tiles:
+        basic_room: 10
+        corridor_straight: 8
+        corridor_turn: 6
+      rooms:
+        treasure_room: 3
+        boss_room: 1
+        spawn_room: 5
+      structures:
+        pillar: 4
+        decoration: 6
+
+  # 火焰主题
+  fire_dungeon:
+    name: "火焰地牢"
+    description: "炽热的地狱主题地牢"
+    author: "HuanDungeonRandom"
+    version: "1.0"
+    
+    materials:
+      wall: "NETHER_BRICKS"
+      floor: "MAGMA_BLOCK"
+      ceiling: "BLACKSTONE"
+      decoration: "FIRE"
+      door_frame: "NETHER_BRICKS"
+      door_opening: "AIR"
+    
+    generation:
+      min_rooms: 8
+      max_rooms: 20
+      corridor_chance: 0.8
+      structure_chance: 0.4
+      room_size_variance: 0.3
+    
+    environment:
+      lighting: 6
+      spawn_hostile: true
+      difficulty_multiplier: 1.5
+      ambient_sound: "AMBIENT_NETHER_WASTES"
+    
+    blueprint_weights:
+      tiles:
+        fire_room: 12
+        lava_corridor: 10
+        nether_turn: 8
+      rooms:
+        fire_shrine: 4
+        lava_pool: 6
+        blaze_chamber: 2
+      structures:
+        fire_pillar: 5
+        lava_fountain: 3
+
+  # 冰霜主题
+  ice_dungeon:
+    name: "冰霜地牢"
+    description: "寒冷的冰雪主题地牢"
+    author: "HuanDungeonRandom"
+    version: "1.0"
+    
+    materials:
+      wall: "PACKED_ICE"
+      floor: "ICE"
+      ceiling: "SNOW_BLOCK"
+      decoration: "BLUE_ICE"
+      door_frame: "PACKED_ICE"
+      door_opening: "AIR"
+    
+    generation:
+      min_rooms: 6
+      max_rooms: 18
+      corridor_chance: 0.6
+      structure_chance: 0.5
+      room_size_variance: 0.25
+    
+    environment:
+      lighting: 10
+      spawn_hostile: true
+      difficulty_multiplier: 1.2
+      ambient_sound: "AMBIENT_CAVE"
+    
+    blueprint_weights:
+      tiles:
+        ice_room: 10
+        frozen_corridor: 8
+        crystal_turn: 6
+      rooms:
+        ice_shrine: 3
+        frozen_lake: 4
+        crystal_chamber: 2
+      structures:
+        ice_pillar: 6
+        snow_pile: 8
+
+  # 森林主题
+  forest_dungeon:
+    name: "森林地牢"
+    description: "自然的森林主题地牢"
+    author: "HuanDungeonRandom"
+    version: "1.0"
+    
+    materials:
+      wall: "OAK_LOG"
+      floor: "GRASS_BLOCK"
+      ceiling: "OAK_LEAVES"
+      decoration: "VINE"
+      door_frame: "OAK_LOG"
+      door_opening: "AIR"
+    
+    generation:
+      min_rooms: 4
+      max_rooms: 12
+      corridor_chance: 0.5
+      structure_chance: 0.6
+      room_size_variance: 0.4
+    
+    environment:
+      lighting: 12
+      spawn_hostile: false
+      difficulty_multiplier: 0.8
+      ambient_sound: "MUSIC_CREATIVE"
+    
+    blueprint_weights:
+      tiles:
+        tree_room: 8
+        vine_corridor: 6
+        leaf_turn: 4
+      rooms:
+        grove: 5
+        tree_shrine: 3
+        flower_garden: 4
+      structures:
+        big_tree: 3
+        flower_patch: 7
+        mushroom: 5
+
+  # 深海主题
+  ocean_dungeon:
+    name: "深海地牢"
+    description: "神秘的海洋主题地牢"
+    author: "HuanDungeonRandom"
+    version: "1.0"
+    
+    materials:
+      wall: "PRISMARINE_BRICKS"
+      floor: "DARK_PRISMARINE"
+      ceiling: "PRISMARINE"
+      decoration: "SEA_LANTERN"
+      door_frame: "PRISMARINE_BRICKS"
+      door_opening: "WATER"
+    
+    generation:
+      min_rooms: 7
+      max_rooms: 16
+      corridor_chance: 0.9
+      structure_chance: 0.3
+      room_size_variance: 0.15
+    
+    environment:
+      lighting: 9
+      spawn_hostile: true
+      difficulty_multiplier: 1.3
+      ambient_sound: "AMBIENT_UNDERWATER_LOOP"
+    
+    blueprint_weights:
+      tiles:
+        coral_room: 9
+        water_corridor: 11
+        prismarine_turn: 7
+      rooms:
+        treasure_vault: 2
+        guardian_chamber: 1
+        coral_garden: 4
+      structures:
+        sea_pillar: 4
+        coral_formation: 6
+
+# ==================== 主题生成规则 ====================
+generation_rules:
+  # 房间连接规则
+  room_connections:
+    # 最小连接数
+    min_connections: 1
+    # 最大连接数
+    max_connections: 4
+    # 连接优先级
+    connection_priority:
+      - "entrance"
+      - "main_path"
+      - "side_rooms"
+      - "secret_areas"
+  
+  # 路径生成规则
+  path_generation:
+    # 主路径必须连通
+    main_path_connected: true
+    # 允许死胡同
+    allow_dead_ends: true
+    # 死胡同最大比例
+    max_dead_end_ratio: 0.3
+    # 环形路径概率
+    loop_chance: 0.2
+  
+  # 特殊房间规则
+  special_rooms:
+    # 入口房间
+    entrance:
+      required: true
+      count: 1
+      position: "start"
+    
+    # Boss房间
+    boss:
+      required: false
+      count: 1
+      position: "end"
+      min_distance_from_entrance: 5
+    
+    # 宝藏房间
+    treasure:
+      required: false
+      count: 2
+      position: "random"
+      min_distance_from_entrance: 3
+
+# ==================== 材料变体配置 ====================
+material_variants:
+  # 是否启用材料变体
+  enabled: true
+  
+  # 变体概率
+  variant_chance: 0.1
+  
+  # 材料变体映射
+  variants:
+    "STONE_BRICKS":
+      - "MOSSY_STONE_BRICKS"
+      - "CRACKED_STONE_BRICKS"
+    
+    "COBBLESTONE":
+      - "MOSSY_COBBLESTONE"
+    
+    "OAK_PLANKS":
+      - "BIRCH_PLANKS"
+      - "SPRUCE_PLANKS"
+    
+    "STONE":
+      - "ANDESITE"
+      - "DIORITE"
+      - "GRANITE"
+
+# ==================== 环境效果配置 ====================
+environmental_effects:
+  # 粒子效果
+  particles:
+    enabled: true
+    # 粒子类型映射
+    theme_particles:
+      fire_dungeon:
+        - "FLAME"
+        - "LAVA"
+      ice_dungeon:
+        - "SNOWBALL"
+        - "CLOUD"
+      forest_dungeon:
+        - "VILLAGER_HAPPY"
+        - "COMPOSTER"
+      ocean_dungeon:
+        - "WATER_BUBBLE"
+        - "DRIP_WATER"
+  
+  # 音效配置
+  sounds:
+    enabled: true
+    # 环境音效间隔 (秒)
+    ambient_interval: 30
+    # 音效音量
+    volume: 0.5
+    # 音效音调
+    pitch: 1.0
+
+# ==================== 配置文件版本 ====================
+config_version: "1.0"

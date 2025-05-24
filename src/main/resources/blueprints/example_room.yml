@@ -1,0 +1,158 @@
+# 示例房间蓝图
+# 这是一个基础的房间蓝图示例，展示了蓝图文件的基本结构
+
+blueprint:
+  # 基本信息
+  name: "基础房间"
+  type: "ROOM"
+  author: "HuanDungeonRandom"
+  version: "1.0"
+  description: "一个包含宝箱和装饰的基础房间"
+  
+  # 尺寸信息
+  size:
+    width: 10
+    height: 5
+    length: 10
+  
+  # 权重 (用于随机选择)
+  weight: 10
+  
+  # 门的位置和朝向
+  doors:
+    - position: [5, 1, 0]
+      direction: "NORTH"
+      material: "AIR"
+    - position: [5, 1, 9]
+      direction: "SOUTH"
+      material: "AIR"
+  
+  # 方块数据 (相对坐标)
+  blocks:
+    # 地板
+    - position: [0, 0, 0]
+      size: [10, 1, 10]
+      material: "STONE"
+      fill: true
+    
+    # 墙壁
+    - position: [0, 1, 0]
+      size: [10, 4, 1]
+      material: "STONE_BRICKS"
+      fill: true
+    - position: [0, 1, 9]
+      size: [10, 4, 1]
+      material: "STONE_BRICKS"
+      fill: true
+    - position: [0, 1, 0]
+      size: [1, 4, 10]
+      material: "STONE_BRICKS"
+      fill: true
+    - position: [9, 1, 0]
+      size: [1, 4, 10]
+      material: "STONE_BRICKS"
+      fill: true
+    
+    # 天花板
+    - position: [0, 4, 0]
+      size: [10, 1, 10]
+      material: "STONE_BRICKS"
+      fill: true
+    
+    # 装饰火把
+    - position: [2, 2, 2]
+      material: "TORCH"
+    - position: [7, 2, 2]
+      material: "TORCH"
+    - position: [2, 2, 7]
+      material: "TORCH"
+    - position: [7, 2, 7]
+      material: "TORCH"
+    
+    # 中央宝箱
+    - position: [5, 1, 5]
+      material: "CHEST"
+      data:
+        facing: "NORTH"
+  
+  # 功能点配置
+  functions:
+    - id: "treasure_chest_1"
+      type: "CHEST"
+      position: [5, 1, 5]
+      name: "宝藏箱"
+      description: "包含珍贵物品的宝箱"
+      config:
+        items:
+          - "DIAMOND:1"
+          - "EMERALD:2"
+          - "GOLD_INGOT:3"
+        one_time_use: true
+        particle_effect: "VILLAGER_HAPPY"
+        sound: "BLOCK_CHEST_OPEN"
+  
+  # 触发器配置
+  triggers:
+    - id: "room_enter_trigger"
+      type: "PLAYER_ENTER"
+      area:
+        center: [5, 2, 5]
+        radius: 3
+      functions:
+        - "room_welcome_message"
+      conditions:
+        - "player.gamemode == SURVIVAL"
+      cooldown: 5000
+  
+  # 生成规则
+  generation_rules:
+    # 旋转设置
+    rotation:
+      enabled: true
+      angles: [0, 90, 180, 270]
+    
+    # 材料替换规则
+    material_replacement:
+      enabled: true
+      rules:
+        "STONE_BRICKS":
+          - material: "MOSSY_STONE_BRICKS"
+            chance: 0.1
+          - material: "CRACKED_STONE_BRICKS"
+            chance: 0.05
+    
+    # 环境适应
+    environment_adaptation:
+      enabled: true
+      theme_materials:
+        fire_dungeon:
+          "STONE_BRICKS": "NETHER_BRICKS"
+          "STONE": "MAGMA_BLOCK"
+          "TORCH": "FIRE"
+        ice_dungeon:
+          "STONE_BRICKS": "PACKED_ICE"
+          "STONE": "ICE"
+          "TORCH": "BLUE_ICE"
+  
+  # 验证规则
+  validation:
+    # 必需的门数量
+    required_doors: 2
+    
+    # 最小空间要求
+    min_air_blocks: 50
+    
+    # 结构完整性检查
+    structural_integrity: true
+    
+    # 可达性检查
+    accessibility_check: true
+
+# 元数据
+metadata:
+  created: "2024-01-01"
+  last_modified: "2024-01-01"
+  tags: ["basic", "room", "treasure", "beginner"]
+  difficulty: 1
+  estimated_time: 300
+  max_players: 4

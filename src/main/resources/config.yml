@@ -1,0 +1,231 @@
+# HuanDungeonRandom 主配置文件
+# 版本: 1.0-SNAPSHOT
+# 更多信息: https://github.com/snhuan/HuanDungeonRandom
+
+# ==================== 插件基础设置 ====================
+plugin:
+  # 调试模式 - 启用后会输出详细的调试信息
+  debug: false
+  
+  # 语言设置
+  language: zh_CN
+  
+  # 自动保存间隔 (秒)
+  auto_save_interval: 600
+  
+  # 插件数据目录
+  data_directory: "data"
+  
+  # 是否在启动时显示欢迎信息
+  show_welcome_message: true
+
+# ==================== 地牢系统设置 ====================
+dungeon:
+  # 最大同时存在的地牢实例数量
+  max_instances: 100
+  
+  # 地牢生成超时时间 (秒)
+  generation_timeout: 30
+  
+  # 地牢清理间隔 (秒) - 自动清理无人的地牢
+  cleanup_interval: 300
+  
+  # 地牢最大存在时间 (秒) - 超过此时间的地牢会被自动清理
+  max_lifetime: 3600
+  
+  # 默认地牢主题
+  default_theme: "default"
+  
+  # 地牢实例命名规则
+  instance_naming:
+    # 命名模式: {theme}_{timestamp}_{random}
+    pattern: "{theme}_{timestamp}_{random}"
+    # 随机数长度
+    random_length: 4
+  
+  # 地牢边界设置
+  boundaries:
+    # 地牢间最小距离
+    min_distance: 1000
+    # 地牢最大尺寸
+    max_size: 500
+    # 默认世界
+    default_world: "world"
+
+# ==================== 性能优化设置 ====================
+performance:
+  # 是否启用异步生成
+  async_generation: true
+  
+  # 线程池大小
+  thread_pool_size: 4
+  
+  # 缓存设置
+  cache:
+    # 是否启用缓存
+    enabled: true
+    # 地牢缓存大小
+    dungeon_cache_size: 50
+    # 蓝图缓存大小
+    blueprint_cache_size: 100
+    # 缓存过期时间 (秒)
+    cache_expire_time: 1800
+  
+  # 预生成设置
+  pre_generation:
+    # 是否启用预生成
+    enabled: true
+    # 预生成数量
+    count: 10
+    # 预生成间隔 (秒)
+    interval: 60
+  
+  # 批量操作设置
+  batch_operations:
+    # 批量方块放置大小
+    block_batch_size: 1000
+    # 批量操作间隔 (tick)
+    batch_interval: 1
+
+# ==================== 数据存储设置 ====================
+database:
+  # 数据存储类型: yaml, json, mysql
+  type: "yaml"
+  
+  # 是否自动保存
+  auto_save: true
+  
+  # 保存间隔 (秒)
+  save_interval: 600
+  
+  # 备份设置
+  backup:
+    # 是否启用自动备份
+    enabled: true
+    # 备份间隔 (小时)
+    interval: 24
+    # 保留备份数量
+    keep_count: 7
+  
+  # MySQL设置 (当type为mysql时使用)
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "huandungeon"
+    username: "root"
+    password: "password"
+    # 连接池设置
+    pool:
+      max_connections: 10
+      min_connections: 2
+      connection_timeout: 30000
+
+# ==================== 消息系统设置 ====================
+messages:
+  # 消息前缀
+  prefix: "§6[HuanDungeonRandom]§r "
+  
+  # 是否启用声音效果
+  sound_enabled: true
+  
+  # 默认声音
+  default_sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+  
+  # 消息类型设置
+  types:
+    info:
+      color: "§a"
+      sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+    warning:
+      color: "§e"
+      sound: "BLOCK_NOTE_BLOCK_BELL"
+    error:
+      color: "§c"
+      sound: "ENTITY_VILLAGER_NO"
+    success:
+      color: "§2"
+      sound: "ENTITY_PLAYER_LEVELUP"
+
+# ==================== 集成设置 ====================
+integrations:
+  # MythicMobs集成
+  mythicmobs:
+    # 是否启用MythicMobs集成
+    enabled: true
+    # 技能执行方式: command, api
+    execution_mode: "command"
+    # 命令模板
+    command_template: "mmcast {player} {skill}"
+  
+  # WorldEdit集成
+  worldedit:
+    # 是否启用WorldEdit集成
+    enabled: true
+    # 是否支持原理图导入
+    schematic_import: true
+  
+  # PlaceholderAPI集成
+  placeholderapi:
+    # 是否启用PlaceholderAPI集成
+    enabled: true
+    # 占位符前缀
+    placeholder_prefix: "huandungeon_"
+
+# ==================== 安全设置 ====================
+security:
+  # 是否启用权限检查
+  permission_check: true
+  
+  # 是否记录操作日志
+  operation_logging: true
+  
+  # 最大操作频率 (每分钟)
+  max_operations_per_minute: 60
+  
+  # 是否启用反作弊检查
+  anti_cheat_check: true
+  
+  # 黑名单世界 (不允许创建地牢的世界)
+  blacklisted_worlds:
+    - "world_nether"
+    - "world_the_end"
+
+# ==================== 调试设置 ====================
+debug:
+  # 是否启用详细日志
+  verbose_logging: false
+  
+  # 是否记录性能数据
+  performance_logging: false
+  
+  # 是否启用内存监控
+  memory_monitoring: false
+  
+  # 调试命令权限
+  debug_permission: "huandungeon.debug"
+  
+  # 日志文件设置
+  log_file:
+    # 是否启用日志文件
+    enabled: false
+    # 日志文件路径
+    path: "logs/huandungeon.log"
+    # 日志级别: ALL, DEBUG, INFO, WARN, ERROR
+    level: "INFO"
+
+# ==================== 实验性功能 ====================
+experimental:
+  # 是否启用实验性功能
+  enabled: false
+  
+  # 实验性功能列表
+  features:
+    # 动态难度调整
+    dynamic_difficulty: false
+    # 智能路径生成
+    smart_pathfinding: false
+    # 自适应性能优化
+    adaptive_performance: false
+
+# ==================== 配置文件版本 ====================
+config_version: "1.0"

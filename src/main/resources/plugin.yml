@@ -1,0 +1,154 @@
+name: HuanDungeonRandom
+version: '1.0-SNAPSHOT'
+main: org.snhuan.huanDungeonRandom.HuanDungeonRandom
+api-version: '1.20'
+description: 高性能地牢随机生成插件，支持动态地牢生成、蓝图系统、触发器功能和队伍系统
+author: HuanDungeonRandom Team
+website: https://github.com/snhuan/HuanDungeonRandom
+
+# 软依赖
+softdepend: [MythicMobs, WorldEdit, PlaceholderAPI]
+
+# 加载顺序
+load: POSTWORLD
+
+# 命令定义
+commands:
+  hdr:
+    description: HuanDungeonRandom主命令
+    usage: /<command> [子命令] [参数...]
+    aliases: [huandungeon, hdungeon, hdr]
+    permission: huandungeon.use
+    permission-message: §c您没有权限使用此命令！
+
+# 权限定义
+permissions:
+  # 基础权限
+  huandungeon.*:
+    description: 所有HuanDungeonRandom权限
+    children:
+      huandungeon.admin: true
+      huandungeon.user: true
+    default: op
+
+  huandungeon.admin:
+    description: 管理员权限 - 所有功能
+    children:
+      huandungeon.user: true
+      huandungeon.command.admin: true
+      huandungeon.dungeon.manage: true
+      huandungeon.blueprint.manage: true
+      huandungeon.function.manage: true
+      huandungeon.trigger.manage: true
+      huandungeon.reload: true
+    default: op
+
+  huandungeon.user:
+    description: 普通用户权限 - 基础功能
+    children:
+      huandungeon.use: true
+      huandungeon.dungeon.create: true
+      huandungeon.dungeon.enter: true
+      huandungeon.dungeon.list: true
+    default: true
+
+  # 基础使用权限
+  huandungeon.use:
+    description: 使用插件基础功能
+    default: true
+
+  # 命令权限
+  huandungeon.command.admin:
+    description: 使用管理员命令
+    default: op
+
+  huandungeon.reload:
+    description: 重载插件配置
+    default: op
+
+  # 地牢相关权限
+  huandungeon.dungeon.create:
+    description: 创建地牢
+    default: true
+
+  huandungeon.dungeon.enter:
+    description: 进入地牢
+    default: true
+
+  huandungeon.dungeon.list:
+    description: 查看地牢列表
+    default: true
+
+  huandungeon.dungeon.manage:
+    description: 管理地牢 - 删除、强制清理等
+    default: op
+
+  huandungeon.dungeon.teleport:
+    description: 传送到地牢
+    default: op
+
+  # 蓝图相关权限
+  huandungeon.blueprint.view:
+    description: 查看蓝图信息
+    default: true
+
+  huandungeon.blueprint.manage:
+    description: 管理蓝图 - 加载、重载、编辑
+    default: op
+
+  # 功能相关权限
+  huandungeon.function.view:
+    description: 查看功能信息
+    default: true
+
+  huandungeon.function.execute:
+    description: 手动执行功能
+    default: op
+
+  huandungeon.function.manage:
+    description: 管理功能 - 创建、删除、编辑
+    default: op
+
+  # 触发器相关权限
+  huandungeon.trigger.view:
+    description: 查看触发器信息
+    default: true
+
+  huandungeon.trigger.manual:
+    description: 手动触发
+    default: op
+
+  huandungeon.trigger.manage:
+    description: 管理触发器 - 创建、删除、编辑
+    default: op
+
+  # 队伍相关权限
+  huandungeon.team.create:
+    description: 创建队伍
+    default: true
+
+  huandungeon.team.join:
+    description: 加入队伍
+    default: true
+
+  huandungeon.team.invite:
+    description: 邀请玩家加入队伍
+    default: true
+
+  huandungeon.team.manage:
+    description: 管理队伍 - 踢出成员、解散队伍
+    default: true
+
+  # 性能监控权限
+  huandungeon.stats:
+    description: 查看插件统计信息
+    default: op
+
+  huandungeon.performance:
+    description: 查看性能监控信息
+    default: op
+
+  # 调试权限
+  huandungeon.debug:
+    description: 使用调试功能
+    default: op
