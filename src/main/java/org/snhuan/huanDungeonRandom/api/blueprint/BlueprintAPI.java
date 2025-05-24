@@ -3,9 +3,12 @@ package org.snhuan.huanDungeonRandom.api.blueprint;
 import org.bukkit.Location;
 import org.snhuan.huanDungeonRandom.blueprint.Blueprint;
 import org.snhuan.huanDungeonRandom.blueprint.BlueprintType;
+import org.snhuan.huanDungeonRandom.blueprint.ValidationResult;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -167,8 +170,8 @@ public class BlueprintAPI {
      * @return 是否有效
      */
     public boolean isBlueprintValid(String blueprintId) {
-        Blueprint blueprint = getBlueprint(blueprintId);
-        return blueprint != null && blueprint.isValid();
+        BlueprintValidationResult result = validateBlueprint(blueprintId);
+        return result.isValid();
     }
 
     // ==================== 蓝图操作 ====================
@@ -223,11 +226,16 @@ public class BlueprintAPI {
         }
 
         try {
-            if (blueprint.isValid()) {
-                return new BlueprintValidationResult(true, "蓝图验证通过");
-            } else {
-                return new BlueprintValidationResult(false, "蓝图验证失败");
-            }
+            ValidationResult validationResult = blueprint.validate();
+            
+            // 使用详细的验证结果来构建BlueprintValidationResult
+            return new BlueprintValidationResult(
+                validationResult.isValid(),
+                validationResult.getMessage(),
+                validationResult.getErrors(),
+                validationResult.getWarnings(),
+                validationResult.getInfos()
+            );
 
         } catch (Exception e) {
             logger.severe("验证蓝图时发生异常: " + blueprintId + " - " + e.getMessage());
@@ -279,10 +287,30 @@ public class BlueprintAPI {
     public static class BlueprintValidationResult {
         private final boolean valid;
         private final String message;
+        private final List<String> errors;
+        private final List<String> warnings;
+        private final List<String> infos;
 
         public BlueprintValidationResult(boolean valid, String message) {
             this.valid = valid;
             this.message = message;
+            this.errors = new ArrayList<>();
+            this.warnings = new ArrayList<>();
+            this.infos = new ArrayList<>();
+            
+            // 如果验证失败且有消息，将消息添加到错误列表
+            if (!valid && message != null && !message.trim().isEmpty()) {
+                this.errors.add(message);
+            }
+        }
+        
+        public BlueprintValidationResult(boolean valid, String message, 
+                                        List<String> errors, List<String> warnings, List<String> infos) {
+            this.valid = valid;
+            this.message = message != null ? message : "";
+            this.errors = errors != null ? new ArrayList<>(errors) : new ArrayList<>();
+            this.warnings = warnings != null ? new ArrayList<>(warnings) : new ArrayList<>();
+            this.infos = infos != null ? new ArrayList<>(infos) : new ArrayList<>();
         }
 
         public boolean isValid() {
@@ -292,13 +320,61 @@ public class BlueprintAPI {
         public String getMessage() {
             return message;
         }
+        
+        public List<String> getErrors() {
+            return new ArrayList<>(errors);
+        }
+        
+        public List<String> getWarnings() {
+            return new ArrayList<>(warnings);
+        }
+        
+        public List<String> getInfos() {
+            return new ArrayList<>(infos);
+        }
+        
+        public boolean hasErrors() {
+            return !errors.isEmpty();
+        }
+        
+        public boolean hasWarnings() {
+            return !warnings.isEmpty();
+        }
+        
+        public boolean hasInfos() {
+            return !infos.isEmpty();
+        }
+        
+        public int getErrorCount() {
+            return errors.size();
+        }
+        
+        public int getWarningCount() {
+            return warnings.size();
+        }
+        
+        public int getInfoCount() {
+            return infos.size();
+        }
 
         @Override
         public String toString() {
-            return "BlueprintValidationResult{" +
-                    "valid=" + valid +
-                    ", message='" + message + '\'' +
-                    '}';
+            StringBuilder sb = new StringBuilder("BlueprintValidationResult{valid=")
+                .append(valid)
+                .append(", message='").append(message).append('\'');
+            
+            if (!errors.isEmpty()) {
+                sb.append(", errors=").append(errors.size());
+            }
+            if (!warnings.isEmpty()) {
+                sb.append(", warnings=").append(warnings.size());
+            }
+            if (!infos.isEmpty()) {
+                sb.append(", infos=").append(infos.size());
+            }
+            
+            sb.append('}');
+            return sb.toString();
         }
     }
 }
