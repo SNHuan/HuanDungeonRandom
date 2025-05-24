@@ -449,19 +449,11 @@ public abstract class Blueprint {
      * @return 是否有效
      */
     public boolean isValid() {
-        // 基础验证
-        if (name == null || name.trim().isEmpty()) {
-            return false;
-        }
-        if (sizeX <= 0 || sizeY <= 0 || sizeZ <= 0) {
-            return false;
-        }
-        if (type == null) {
-            return false;
-        }
-
-        // 子类可以重写此方法添加更多验证
-        return validateSpecific();
+        // 使用更全面的validate()方法进行验证
+        ValidationResult result = validate();
+        
+        // 子类可以重写validateSpecific方法添加更多验证
+        return result.isValid() && validateSpecific();
     }
 
     /**
